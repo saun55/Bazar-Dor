@@ -4,9 +4,24 @@ const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
     agentFeedback: true,
+
   },
-  cacheComponents: true,
-  partialPrefetching: true,
+
+
+     images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        // port: '',
+        // pathname: '/my-bucket/**',
+        // search: '',
+      },
+    ],
+  },
+
+  // cacheComponents: true,
+  // partialPrefetching: true,
   reactCompiler: true,
   turbopack: {
     rules: {
