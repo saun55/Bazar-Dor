@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { MarqueeType } from "../../DataType/MarqueeType";
+import AuthLink from "@/app/AuthLink/AuthLink";
 
 const unitBn: Record<string, string> = {
   kg: "প্রতি কেজি",
@@ -20,6 +22,7 @@ const PriceIncreaseCard = ({item}:{item:MarqueeType}) => {
   const isUp = item?.change?.dir === "up";
 
   return (
+<AuthLink card={item}>
     <div className="w-full  rounded-2xl border border-gray-200 bg-[#fdfefd] p-4 shadow-sm">
 
       {/* Top Section */}
@@ -73,6 +76,7 @@ const PriceIncreaseCard = ({item}:{item:MarqueeType}) => {
 
       </div>
     </div>
+</AuthLink>
   );
 };
 

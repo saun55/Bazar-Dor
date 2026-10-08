@@ -2,10 +2,10 @@
 
 import { updateUser, useSession } from "@/lib/auth-client";
 import Image from "next/image";
-import GoogleSignIn from "../component/SignOut";
+import GoogleSignIn from "../authentication/signButton/SignOut";
 import { toast } from "react-toastify";
 import { object } from "better-auth";
-import SignOut from "../component/SignOut";
+import SignOut from "../authentication/signButton/SignOut";
 import Link from "next/link";
 
 const ProfilePage = () => {
@@ -46,13 +46,15 @@ if(handleUpdateUser){
             <div className="h-20 w-20 overflow-hidden rounded-2xl bg-gray-100">
               {/* image */}
               {session?.user?.image ? (
-                <Image
-                  src={session.user.image}
-                  alt={session?.user?.name || "User"}
-                  width={36}
-                  height={36}
-                  className="h-8 w-8 rounded-full object-cover sm:h-9 sm:w-9"
-                />
+
+<div className="relative h-20 w-full overflow-hidden rounded-[10px]">
+  <Image
+    src={session.user.image}
+    alt={session.user.name || "User"}
+    fill
+    className="object-cover"
+  />
+</div>
               ) : (
                 <div className="flex h-8 w-8 items-center justify-center text-center rounded-full bg-[#05893E] text-sm font-bold text-white sm:h-9 sm:w-9">
                   {session?.user?.name?.charAt(0)?.toUpperCase() || "U"}

@@ -1,6 +1,7 @@
 import MarqueeText from "react-marquee-text";
 import MarqueeDataFetch from "../allDataFetch/MarqueeDataFetch";
 import { MarqueeType } from "../DataType/MarqueeType";
+import AuthLink from "../AuthLink/AuthLink";
 
 
 const unitBn: Record<string, string> = {
@@ -30,7 +31,7 @@ const Marquee = async () => {
         {/* First Data */}
         <div className="flex shrink-0">
           {data.map((item) => (
-            <div
+            <div 
               key={item.id}
               className="flex h-10 items-center gap-1.5 border-r border-gray-100 px-4 whitespace-nowrap"
             >

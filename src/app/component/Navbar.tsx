@@ -4,7 +4,7 @@ import logo from "@/assets/logo-icon.png";
 import { useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import SignOut from "./SignOut";
+import SignOut from "../authentication/signButton/SignOut";
 import { useEffect, useState } from "react";
 import baseUrl from "@/service/baseUrl";
 import { CategoryType } from "../DataType/CategoriesType";
@@ -140,7 +140,7 @@ useEffect(()=>{
         {
           categories.map(cate=>{
             return(
-              <Link href={`/categoriDetails/${cate.id}`} key={cate.id}>
+              <Link href={`/Categories/${cate.id}`} key={cate.id}>
 <span><span>{cate.icon}</span>{cate.nameBn}</span>
 
               </Link>

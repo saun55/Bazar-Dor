@@ -7,6 +7,8 @@ const AllProduct = async() => {
   const data:MarqueeType[] =await MarqueeDataFetch();
 
   return (
+<>
+
     <div className="container  mx-auto py-10">
 <div className="pb-5">
       <h1 className="font-bold text-[20px]">সব পণ্য</h1>
@@ -21,6 +23,8 @@ data.map(cart=><AllProductCard key={cart.id} card={cart}/>)
         }
       </div>
     </div>
+
+    </>
   );
 };
 
