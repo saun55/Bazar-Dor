@@ -29,7 +29,7 @@ const SignInPage = () => {
       callbackURL: string;
       image: string
     };
-
+console.log(data);
     const { data: resData, error } = await signIn.email({
       ...data,
       callbackURL: "/",
@@ -70,57 +70,50 @@ const SignInPage = () => {
   };
 
 
- const handleGoogleSignIn = async() =>{
-const data = await signIn.social({
-  provider: "google"
-})
+const handleGoogleSignIn = async () => {
+  try {
+    const { error } = await signIn.social({
+      provider: "google",
+      callbackURL: "/",
+     
+    });
 
-if(data){
- 
-        console.log(data);
-      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!", {
+    if (error) {
+      console.error(error);
+      toast.error("Google দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
         position: "bottom-center",
         autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "dark",
         transition: Zoom,
       });
-}
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Google দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
+  }
+};
 
-if(!data){
-       toast.error("সঠিক ইমেইল ঠিকানা দিন!", {
+const handleGithubSignIn = async () => {
+  try {
+    const { error } = await signIn.social({
+      provider: "github",
+      callbackURL: "/",
+      errorCallbackURL: "/",
+    });
+
+    if (error) {
+      console.error(error);
+      toast.error("GitHub দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
         position: "bottom-center",
         autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
         theme: "dark",
         transition: Zoom,
       });
-}
-
-
-}
-
-
-const handleGithubSignIn = async() => {
- const data = await signIn.social({
-  provider: "github"
- })
-
- if(data){
-  toast.success("success")
- }
-if(!data){
-  toast.error("Not Success")
-}
-
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("GitHub দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
+  }
 };
 
 
@@ -211,7 +204,7 @@ if(!data){
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800 transition hover:border-[#05893E]"
-              onClick={handleGoogleSignIn}
+              onClick={()=>handleGoogleSignIn()}
             >
               <span>
                 <svg
@@ -248,7 +241,7 @@ if(!data){
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800 transition hover:border-[#05893E]"
-              onClick={handleGithubSignIn}
+              onClick={()=>handleGithubSignIn()}
             >
               <span className="text-lg">
                 <FaGithub />
@@ -261,7 +254,7 @@ if(!data){
           <p className="mt-6 text-center text-sm text-gray-700">
             অ্যাকাউন্ট নেই?{" "}
             <Link
-              href="/authentication/signUp"
+              href="/authentication/SignUp"
               className="font-medium text-[#05893E] hover:underline"
             >
               অ্যাকাউন্ট তৈরি করুন

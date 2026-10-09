@@ -1,6 +1,7 @@
 "use client";
 
-import { signUp } from "@/lib/auth-client";
+
+import { signIn, signUp } from "@/lib/auth-client";
 import {
   Button,
   FieldError,
@@ -31,7 +32,7 @@ const SignUp = () => {
 
     const { data: resData, error } = await signUp.email({
       ...data,
-      callbackURL: "/",
+      callbackURL: "/signIn",
     });
 
     if (resData) {
@@ -49,7 +50,7 @@ const SignUp = () => {
         transition: Zoom,
       });
 
-      redirect("/");
+      redirect("/signIn");
     }
 
     if (!resData) {
@@ -67,6 +68,62 @@ const SignUp = () => {
       });
     }
   };
+
+
+const handleGoogleSignIn = async() =>{
+const data = await signIn.social({
+  provider:"google"
+})
+
+if(data){
+ 
+        console.log(data);
+      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!", {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
+}
+
+if(!data){
+       toast.error("সঠিক ইমেইল ঠিকানা দিন!", {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Zoom,
+      });
+}
+
+
+}
+
+
+const handleGithubSignIn = async() => {
+ const data = await signIn.social({
+  provider: "github"
+ })
+
+ if(data){
+  toast.success("GitHub দিয়ে লগইন সফল হয়েছে!")
+ }
+if(!data){
+  toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে!")
+}
+
+};
+
+
 
   return (
     <div className="min-h-screen bg-[#f3f8f4] px-4 py-8  text-[#252a27]">
@@ -190,6 +247,7 @@ const SignUp = () => {
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800"
+              onClick={handleGoogleSignIn}
             >
               <span>
                 <svg
@@ -222,6 +280,7 @@ const SignUp = () => {
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800"
+              onClick={handleGithubSignIn}
             >
               <span className="text-lg">
                 <FaGithub />

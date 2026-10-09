@@ -8,34 +8,36 @@ import SignOut from "../authentication/signButton/SignOut";
 import { useEffect, useState } from "react";
 import baseUrl from "@/service/baseUrl";
 import { CategoryType } from "../DataType/CategoriesType";
-
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const { data: session } = useSession();
 
-const [categories,setCategories] =useState<CategoryType[]>([])
+  const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const today = new Date().toLocaleDateString("bn-BD", {
     dateStyle: "full",
   });
 
-useEffect(()=>{
-  fetch(`${baseUrl}/categories`).
-  then(res=> res.json()).
-  then(data=> setCategories(data)).
-  catch(error => console.log(error))
-},[])
-
+  useEffect(() => {
+    fetch(`${baseUrl}/categories`)
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <div className="bg-base-200 py-3 shadow-sm sm:py-4">
       <div className="container mx-auto space-y-2 px-4 sm:px-6 lg:px-8">
-
         <div className="flex items-center justify-between gap-3">
           {/* Logo + Website Info */}
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             {/* Logo */}
-            <Link href={"/"} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#05893E] sm:h-12 sm:w-12">
+            <Link
+              href={"/"}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#05893E] sm:h-12 sm:w-12"
+            >
               <Image
                 src={logo}
                 alt="NavLogo"
@@ -112,9 +114,8 @@ useEffect(()=>{
                 >
                   👤 আমার প্রোফাইল
                 </Link>
-  {/* Sign Out */}
-   <SignOut/>       
-
+                {/* Sign Out */}
+                <SignOut />
               </div>
             </div>
           ) : (
@@ -136,22 +137,24 @@ useEffect(()=>{
         </div>
 
         {/* NavLink */}
-              <div className="flex gap-3">
-        {
-          categories.map(cate=>{
-            return(
+        <div className="flex gap-3">
+          {categories.map((cate) => {
+            
+            return (
               <Link href={`/Categories/${cate.id}`} key={cate.id}>
-<span><span>{cate.icon}</span>{cate.nameBn}</span>
-
+                <span>
+                  <span>{cate.icon}</span>
+                  {cate.nameBn}
+                </span>
               </Link>
-            )
-          })
-        }
-       
-      </div>
+            );
+          })}
+        </div>
+
+
+
 
       </div>
-
     </div>
   );
 };

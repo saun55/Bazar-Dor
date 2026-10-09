@@ -2,11 +2,11 @@
 
 import { updateUser, useSession } from "@/lib/auth-client";
 import Image from "next/image";
-import GoogleSignIn from "../authentication/signButton/SignOut";
+
 import { toast } from "react-toastify";
-import { object } from "better-auth";
+
 import SignOut from "../authentication/signButton/SignOut";
-import Link from "next/link";
+
 
 const ProfilePage = () => {
   const { data: session } = useSession();
@@ -49,8 +49,8 @@ if(handleUpdateUser){
 
 <div className="relative h-20 w-full overflow-hidden rounded-[10px]">
   <Image
-    src={session.user.image}
-    alt={session.user.name || "User"}
+    src={session?.user?.image}
+    alt={session?.user?.name || "User"}
     fill
     className="object-cover"
   />

@@ -1,7 +1,7 @@
 import MarqueeText from "react-marquee-text";
 import MarqueeDataFetch from "../allDataFetch/MarqueeDataFetch";
 import { MarqueeType } from "../DataType/MarqueeType";
-import AuthLink from "../AuthLink/AuthLink";
+
 
 
 const unitBn: Record<string, string> = {

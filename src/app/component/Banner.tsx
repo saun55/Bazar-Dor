@@ -1,6 +1,7 @@
 import Image from "next/image";
 import banner from "@/assets/bazar-hero.png"
 import Link from "next/link";
+import baseUrl from "@/service/baseUrl";
 
 const Banner = () => {
   const data = new Date().toLocaleDateString("bn-BD",{
@@ -24,11 +25,11 @@ const Banner = () => {
         চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক
         বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
       </p>
-<Link href={"/component/allProduct"}>
-      <button className="btn bg-[#05893E] text-white hover:bg-[#047a37]">
+
+      <Link href={"#AllProduct"} className="btn bg-[#05893E] text-white hover:bg-[#047a37]">
         সব পণ্য দেখুন
-      </button>
-</Link>
+      </Link>
+
     </div>
 
     {/* Banner Logo */}
