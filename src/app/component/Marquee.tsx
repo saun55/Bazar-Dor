@@ -21,6 +21,9 @@ const toBanglaNumber = (value: number | string) => {
 };
 
 const Marquee = async () => {
+
+
+
   const data: MarqueeType[] = await MarqueeDataFetch();
 
   return (

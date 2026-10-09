@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link";
 import { MarqueeType } from "../../DataType/MarqueeType";
 import AuthLink from "@/app/AuthLink/AuthLink";
 
@@ -50,7 +49,7 @@ const AllProductCard = ({card}:{card:MarqueeType}) => {
         {/* Name + Unit */}
         <div>
           <h2 className="text-[16px] font-semibold leading-tight text-[#252a27]">
-            {card?.categoryNameBn}
+            {card?.nameBn}
           </h2>
 
           <p className="mt-1 text-[12px] text-gray-500">
@@ -69,7 +68,7 @@ const AllProductCard = ({card}:{card:MarqueeType}) => {
           </p>
 
           <p className="mt-1 text-[20px] font-bold leading-none text-[#252a27]">
-            ৳{toBanglaNumber(card?.today)}
+            {toBanglaNumber(card?.today)}
             <span className="ml-1 text-[13px] font-normal text-gray-600">
               টাকা
             </span>

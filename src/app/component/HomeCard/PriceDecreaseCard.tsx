@@ -56,7 +56,7 @@ const PriceDecreaseCard = ({card}:{card:MarqueeType}) => {
           </p>
 
           <p className="mt-1 text-[20px] font-bold leading-none text-[#252a27]">
-            ৳{toBanglaNumber(card?.today)}
+            {toBanglaNumber(card?.today)}
             <span className="ml-1 text-[13px] font-normal text-gray-600">
               টাকা
             </span>

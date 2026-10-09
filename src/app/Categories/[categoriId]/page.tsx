@@ -3,24 +3,16 @@ import { CategoriesDeatailsType } from "@/app/DataType/CategoriesDeatailsType";
 import DropDown from "@/app/sortDropDown/DropDown";
 import baseUrl from "@/service/baseUrl";
 
-
-
-
-
- export async function generateStaticParams(){
+export async function generateStaticParams() {
   const posts = await fetch(`${baseUrl}/products?category`);
 
-    if (!posts.ok) {
+  if (!posts.ok) {
     throw new Error("Failed to fetch categories");
   }
 
-  const data:CategoriesDeatailsType[] = await posts.json();
-  return data.map(item=>({categoriId: item.id}))
+  const data: CategoriesDeatailsType[] = await posts.json();
+  return data.map((item) => ({ categoriId: item.id }));
 }
-
-
-
-
 
 const CategoriesDetailsPage = async ({
   params,
@@ -32,17 +24,13 @@ const CategoriesDetailsPage = async ({
   const { categoriId } = await params;
   const { sort } = await searchParams;
 
-  const res = await fetch(
-    `${baseUrl}/products?category=${categoriId}`
-  );
+  const res = await fetch(`${baseUrl}/products?category=${categoriId}`);
 
   const data: CategoriesDeatailsType[] = await res.json();
 
-  const categoriesInfo = data.find(
-    (c) => c.category === categoriId
-  );
+  const categoriesInfo = data.find((c) => c.category === categoriId);
 
-  // নতুন array বানিয়ে sort করছি
+  
   const sortedData = [...data];
 
   if (sort === "low") {
@@ -55,7 +43,6 @@ const CategoriesDetailsPage = async ({
 
   return (
     <div className="container mx-auto">
-
       {/* Category Info */}
       <div className="my-4 flex w-full gap-2 rounded-2xl border border-gray-200 bg-[#fdfefd] p-4 shadow-sm">
         <p className="flex items-center justify-center">
@@ -78,20 +65,14 @@ const CategoriesDetailsPage = async ({
 
       {/* Total */}
       <h1>
-        মোট{" "}
-        <span>
-          {sortedData.length.toLocaleString("bn-BD")}
-        </span>
+        মোট <span>{sortedData.length.toLocaleString("bn-BD")}</span>
         টি পণ্য দেখানো হচ্ছে
       </h1>
 
       {/* Products */}
       <div className="my-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {sortedData.map((item) => (
-          <PriceCard
-            key={item.id}
-            item={item}
-          />
+          <PriceCard key={item.id} item={item} />
         ))}
       </div>
     </div>

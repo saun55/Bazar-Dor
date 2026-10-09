@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
+
   const { data: session } = useSession();
 
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -71,7 +72,7 @@ const Navbar = () => {
                 {/* User Image */}
                 {session?.user?.image ? (
                   <Image
-                    src={session.user.image}
+                    src={session?.user.image}
                     alt={session?.user?.name || "User"}
                     width={36}
                     height={36}
@@ -98,7 +99,7 @@ const Navbar = () => {
               >
                 {/* User Information */}
                 <div className="mb-2 rounded-lg bg-base-200 p-3">
-                  <p className="truncate font-semibold">
+                  <p className="truncate font-semibold" >
                     {session?.user?.name}
                   </p>
 
@@ -140,11 +141,16 @@ const Navbar = () => {
         <div className="flex gap-3">
           {categories.map((cate) => {
             
+  const path =
+    pathname === `/Categories/${cate?.id}`
+      ? "text-[#05893E]"
+      : "";
+
             return (
-              <Link href={`/Categories/${cate.id}`} key={cate.id}>
+              <Link href={`/Categories/${cate.id}`} className={path} key={cate?.id}>
                 <span>
-                  <span>{cate.icon}</span>
-                  {cate.nameBn}
+                  <span>{cate?.icon}</span>
+                  {cate?.nameBn}
                 </span>
               </Link>
             );
