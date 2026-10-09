@@ -1,6 +1,5 @@
 "use client";
 
-
 import { signIn, signUp } from "@/lib/auth-client";
 import {
   Button,
@@ -12,12 +11,15 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { toast, Zoom } from "react-toastify";
 
 const SignUp = () => {
+  const router = useRouter();
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,17 +29,57 @@ const SignUp = () => {
       name: string;
       email: string;
       password: string;
-      callbackURL: string;
+      confirmPassword: string;
     };
 
+    const { name, email, password, confirmPassword } = data;
+
+    if (password !== confirmPassword) {
+      toast.error("দুটি পাসওয়ার্ড সমান নয়!", {
+        position: "bottom-center",
+        theme: "dark",
+      });
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      toast.error("পাসওয়ার্ডে অন্তত একটি বড় হাতের অক্ষর দিন!", {
+        position: "bottom-center",
+        theme: "dark",
+      });
+      return;
+    }
+
     const { data: resData, error } = await signUp.email({
-      ...data,
-      callbackURL: "/signIn",
+      name,
+      email,
+      password,
+      callbackURL: "/authentication/signIn",
     });
 
-    if (resData) {
-      console.log(data);
+    if (error || !resData) {
+      toast.error("অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে!", {
+        position: "bottom-center",
+        theme: "dark",
+      });
+      return;
+    }
 
+    toast.success("অ্যাকাউন্ট তৈরি হয়েছে! এবার সাইন ইন করুন।", {
+      position: "bottom-center",
+      theme: "dark",
+    });
+
+    router.push("/authentication/signIn");
+  };
+
+  const handleGoogleSignIn = async () => {
+    const data = await signIn.social({
+      provider: "google",
+    });
+
+    if (data) {
+      console.log(data);
       toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!", {
         position: "bottom-center",
         autoClose: 1000,
@@ -49,13 +91,10 @@ const SignUp = () => {
         theme: "dark",
         transition: Zoom,
       });
-
-      redirect("/signIn");
     }
 
-    if (!resData) {
-      console.log(error);
-      toast.success("অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে!", {
+    if (!data) {
+      toast.error("সঠিক ইমেইল ঠিকানা দিন!", {
         position: "bottom-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -69,62 +108,18 @@ const SignUp = () => {
     }
   };
 
+  const handleGithubSignIn = async () => {
+    const data = await signIn.social({
+      provider: "github",
+    });
 
-const handleGoogleSignIn = async() =>{
-const data = await signIn.social({
-  provider:"google"
-})
-
-if(data){
- 
-        console.log(data);
-      toast.success("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!", {
-        position: "bottom-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
-}
-
-if(!data){
-       toast.error("সঠিক ইমেইল ঠিকানা দিন!", {
-        position: "bottom-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Zoom,
-      });
-}
-
-
-}
-
-
-const handleGithubSignIn = async() => {
- const data = await signIn.social({
-  provider: "github"
- })
-
- if(data){
-  
-  toast.success("GitHub দিয়ে লগইন সফল হয়েছে!")
- }
-if(!data){
-  toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে!")
-}
-
-};
-
-
+    if (data) {
+      toast.success("GitHub দিয়ে লগইন সফল হয়েছে!");
+    }
+    if (!data) {
+      toast.error("GitHub দিয়ে লগইন করতে সমস্যা হয়েছে!");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f3f8f4] px-4 py-8  text-[#252a27]">
@@ -318,15 +313,6 @@ if(!data){
 
 export default SignUp;
 
-
-
-
-
-
-
-
-
-
 // "use client";
 
 // import { signIn, signUp } from "@/lib/auth-client";
@@ -358,7 +344,6 @@ export default SignUp;
 
 // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 // e.preventDefault();
-
 
 // const form = e.currentTarget;
 // const formData = new FormData(form);
@@ -417,7 +402,6 @@ export default SignUp;
 //   toast.error("সার্ভারে সমস্যা হয়েছে। আবার চেষ্টা করুন!", toastOptions);
 // }
 
-
 // };
 
 // const handleGoogleSignIn = async () => {
@@ -426,7 +410,6 @@ export default SignUp;
 // provider: "google",
 // callbackURL: "/",
 // });
-
 
 //   if (error) {
 //     toast.error(
@@ -438,7 +421,6 @@ export default SignUp;
 //   toast.error("Google দিয়ে সাইন ইন করা যায়নি!", toastOptions);
 // }
 
-
 // };
 
 // const handleGithubSignIn = async () => {
@@ -447,7 +429,6 @@ export default SignUp;
 // provider: "github",
 // callbackURL: "/",
 // });
-
 
 //   if (error) {
 //     toast.error(
@@ -459,7 +440,6 @@ export default SignUp;
 //   toast.error("GitHub দিয়ে সাইন ইন করা যায়নি!", toastOptions);
 // }
 
-
 // };
 
 // return ( <div className="min-h-screen bg-[#f3f8f4] px-4 py-8 text-[#252a27]">
@@ -467,7 +447,6 @@ export default SignUp;
 // {/* Header */}
 
 //  <div className="mx-auto mb-6 w-full max-w-[470px] text-center"> <h1 className="text-3xl font-bold">অ্যাকাউন্ট তৈরি করুন</h1>
-
 
 //     <p className="mt-1 text-sm text-gray-600">
 //       বিনা খরচে সাইন আপ করে সব বিস্তারিত দাম দেখুন।
@@ -663,7 +642,6 @@ export default SignUp;
 //     </div>
 //   </div>
 // </div>
-
 
 // );
 // };
