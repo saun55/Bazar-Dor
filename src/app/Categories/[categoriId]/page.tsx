@@ -1,7 +1,12 @@
+export const dynamic = "force-dynamic";
+
 import PriceCard from "@/app/component/PriceCard";
 import { CategoriesDeatailsType } from "@/app/DataType/CategoriesDeatailsType";
 import DropDown from "@/app/sortDropDown/DropDown";
 import baseUrl from "@/service/baseUrl";
+
+
+
 
 export async function generateStaticParams() {
   const posts = await fetch(`${baseUrl}/products?category`);
