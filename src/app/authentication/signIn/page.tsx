@@ -27,9 +27,9 @@ const SignInPage = () => {
       email: string;
       password: string;
       callbackURL: string;
-      image: string
+      image: string;
     };
-console.log(data);
+    console.log(data);
     const { data: resData, error } = await signIn.email({
       ...data,
       callbackURL: "/",
@@ -69,55 +69,60 @@ console.log(data);
     }
   };
 
-
-const handleGoogleSignIn = async () => {
-  try {
-    const { error } = await signIn.social({
-      provider: "google",
-      callbackURL: "/",
-     
-    });
-
-    if (error) {
-      console.error(error);
-      toast.error("Google দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
-        position: "bottom-center",
-        autoClose: 1000,
-        theme: "dark",
-        transition: Zoom,
+  const handleGoogleSignIn = async () => {
+    try {
+      const { data, error } = await signIn.social({
+        provider: "google",
+        callbackURL: "/",
       });
-    }
-  } catch (error) {
-    console.error(error);
-    toast.error("Google দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
-  }
-};
 
-const handleGithubSignIn = async () => {
-  try {
-    const { error } = await signIn.social({
-      provider: "github",
-      callbackURL: "/",
-      errorCallbackURL: "/",
-    });
+      if (data) {
+        console.log(data);
+        toast.success("Google দিয়ে সফলভাবে সাইন ইন হয়েছে!");
+      }
 
-    if (error) {
+      if (error) {
+        console.error(error);
+        toast.error("Google দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
+          position: "bottom-center",
+          autoClose: 1000,
+          theme: "dark",
+          transition: Zoom,
+        });
+      }
+    } catch (error) {
       console.error(error);
-      toast.error("GitHub দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
-        position: "bottom-center",
-        autoClose: 1000,
-        theme: "dark",
-        transition: Zoom,
-      });
+      toast.error("Google দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
     }
-  } catch (error) {
-    console.error(error);
-    toast.error("GitHub দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
-  }
-};
+  };
 
+  const handleGithubSignIn = async () => {
+    try {
+      const { data, error } = await signIn.social({
+        provider: "github",
+        callbackURL: "/",
+        errorCallbackURL: "/",
+      });
 
+      if (data) {
+        console.log(data);
+        toast.success("GitHub দিয়ে সফলভাবে সাইন ইন হয়েছে!");
+      }
 
+      if (error) {
+        console.error(error);
+        toast.error("GitHub দিয়ে সাইন ইন করতে সমস্যা হয়েছে!", {
+          position: "bottom-center",
+          autoClose: 1000,
+          theme: "dark",
+          transition: Zoom,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("GitHub দিয়ে সাইন ইন ব্যর্থ হয়েছে!");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#f3f8f4] px-4 py-8 text-[#252a27]">
@@ -204,7 +209,7 @@ const handleGithubSignIn = async () => {
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800 transition hover:border-[#05893E]"
-              onClick={()=>handleGoogleSignIn()}
+              onClick={() => handleGoogleSignIn()}
             >
               <span>
                 <svg
@@ -241,7 +246,7 @@ const handleGithubSignIn = async () => {
               type="button"
               variant="secondary"
               className="h-12 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-800 transition hover:border-[#05893E]"
-              onClick={()=>handleGithubSignIn()}
+              onClick={() => handleGithubSignIn()}
             >
               <span className="text-lg">
                 <FaGithub />

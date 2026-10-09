@@ -1,6 +1,23 @@
 import Image from "next/image";
 import MarqueeDataFetch from "@/app/allDataFetch/MarqueeDataFetch";
 import { CategoriesDeatailsType } from "@/app/DataType/CategoriesDeatailsType";
+import baseUrl from "@/service/baseUrl";
+
+
+
+export async function generateStaticParams(){
+  const posts = await fetch(`${baseUrl}/products`);
+
+    if (!posts.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  const data:CategoriesDeatailsType[] = await posts.json();
+  return data.map(item=>({Id: String(item.id)}))
+}
+
+
+
 
 const unitBn: Record<string, string> = {
   kg: "কেজি",

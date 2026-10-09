@@ -3,6 +3,25 @@ import { CategoriesDeatailsType } from "@/app/DataType/CategoriesDeatailsType";
 import DropDown from "@/app/sortDropDown/DropDown";
 import baseUrl from "@/service/baseUrl";
 
+
+
+
+
+ export async function generateStaticParams(){
+  const posts = await fetch(`${baseUrl}/products?category`);
+
+    if (!posts.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  const data:CategoriesDeatailsType[] = await posts.json();
+  return data.map(item=>({categoriId: item.id}))
+}
+
+
+
+
+
 const CategoriesDetailsPage = async ({
   params,
   searchParams,
