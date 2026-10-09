@@ -8,7 +8,7 @@ Bazar Dor is a modern, responsive web application designed to help users explore
 
 ## 🌐 Live Demo
 
-🔗 **Live Website:** [Visit Bazar Dor](YOUR_VERCEL_DEPLOYMENT_URL)
+🔗 **Live Website:** [Visit Bazar Dor](https://bazar-dor-five-delta.vercel.app/)
 
 ## 📸 About The Project
 
